@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4 mb-4 text-center">Diabetes Prediction</h2>
+        <form action="/predict" method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="Pregnancies">Pregnancies:</label>
+                <input type="number" class="form-control" id="Pregnancies" name="Pregnancies" step="0.01" required>
+                <div class="invalid-feedback">Please enter the number of pregnancies.</div>
+            </div>
+            <div class="form-group">
+                <label for="Glucose">Glucose:</label>
+                <input type="number" class="form-control" id="Glucose" name="Glucose" step="0.01" required>
+                <div class="invalid-feedback">Please enter the glucose level.</div>
+            </div>
+            <div class="form-group">
+                <label for="BloodPressure">Blood Pressure:</label>
+                <input type="number" class="form-control" id="BloodPressure" name="BloodPressure" step="0.01" required>
+                <div class="invalid-feedback">Please enter the blood pressure.</div>
+            </div>
+            <div class="form-group">
+                <label for="SkinThickness">Skin Thickness:</label>
+                <input type="number" class="form-control" id="SkinThickness" name="SkinThickness" step="0.01" required>
+                <div class="invalid-feedback">Please enter the skin thickness.</div>
+            </div>
+            <div class="form-group">
+                <label for="Insulin">Insulin:</label>
+                <input type="number" class="form-control" id="Insulin" name="Insulin" step="0.01" required>
+                <div class="invalid-feedback">Please enter the insulin level.</div>
+            </div>
+            <div class="form-group">
+                <label for="BMI">BMI:</label>
+                <input type="number" class="form-control" id="BMI" name="BMI" step="0.01" required>
+                <div class="invalid-feedback">Please enter the BMI.</div>
+            </div>
+            <div class="form-group">
+                <label for="DiabetesPedigreeFunction">Diabetes Pedigree Function:</label>
+                <input type="number" class="form-control" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" step="0.01" required>
+                <div class="invalid-feedback">Please enter the diabetes pedigree function.</div>
+            </div>
+            <div class="form-group">
+                <label for="Age">Age:</label>
+                <input type="number" class="form-control" id="Age" name="Age" step="0.01" required>
+                <div class="invalid-feedback">Please enter the age.</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Predict</button>
+        </form>
+        {% if svm_result %}
+        <div class="mt-4">
+            <h4>SVM Prediction: <span class="badge badge-secondary">{{ svm_result }}</span></h4>
+            <h4>Logistic Regression Prediction: <span class="badge badge-secondary">{{ logistic_result }}</span></h4>
+            <h4>Random Forest Prediction: <span class="badge badge-secondary">{{ random_forest_result }}</span></h4>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        // Bootstrap form validation
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+    </script>
+</body>
+</html>
